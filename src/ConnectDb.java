@@ -38,6 +38,8 @@ public class ConnectDb {
 			return null;
 		}
 	}
+	
+	
 
 	public String getIp() {
 		return ip;
