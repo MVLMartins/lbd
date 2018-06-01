@@ -5,7 +5,7 @@ public class EstatistcVendas {
 	private String dia;
 	private double dataVenda;
 	private int venda;
-	private int part;
+	private double part;
 	private String status;
 	
 	
@@ -15,7 +15,7 @@ public class EstatistcVendas {
 		return dia + "|" + semana  + "|" + dataVenda  + "|" + venda  + "|" + part + "|" + status;
 	}
 	
-	public EstatistcVendas(double semana,String dia,double dataVenda,int venda,	int part,String status) {
+	public EstatistcVendas(double semana,String dia,double dataVenda,int venda,	double part,String status) {
 		this.setSemana(semana);
 		this.setDia(dia);
 		this.setDataVenda(dataVenda);
@@ -56,11 +56,11 @@ public class EstatistcVendas {
 		this.venda = venda;
 	}
 
-	public int getPart() {
+	public double getPart() {
 		return part;
 	}
 
-	private void setPart(int part) {
+	private void setPart(double part) {
 		this.part = part;
 	}
 

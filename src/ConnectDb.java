@@ -22,24 +22,77 @@ public class ConnectDb {
 	private String Senha;
 	private Connection connnection;
 
-	public Connection conectar() {
-		if(connnection!=null) return connnection;
-		
+	private void conectar() {
 		try {
 			Class.forName("org.postgresql.Driver");
 			connnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "matheus", "senha");
-			return connnection;
 		} catch (SQLException e) {
 			System.out.println(e.getCause());
 			System.out.print("Erro na conexao!!!!KKKKKKK");
-			return null;
 		} catch (ClassNotFoundException e) {
 			System.out.println("classe não encontrada");
-			return null;
 		}
 	}
+
+	public void updateQuery(String sql)
+	{
+	    PreparedStatement s;
+	    try
+	    {
+
+	        if(connnection == null || connnection.isClosed())
+	        {
+	            conectar();
+	        }
+	        s = connnection.prepareStatement(sql);
+	        boolean a = s.execute();
+	        s.close ();
+	        System.out.println (a + " foi o retorno na função");
+	    } 
+	    catch (SQLException e) 
+	    {
+	        e.printStackTrace();
+	        if (connnection != null)
+	        {
+	            try
+	            {
+	                connnection.close ();
+	                System.out.println ("Database connection terminated");
+	            }
+	            catch (Exception se) {System.out.println("n sei o q aconteceu");}
+	        }
+	    }
+
+	}
+
 	
-	
+	public <T> T getResultsQuery(String sql, IResultSetHandler<T> resultSetHandler )  {
+	    Statement statement = null;
+	    try
+	    {
+	        if(this.connnection == null || this.connnection.isClosed())
+	        {
+	            conectar();
+	        }
+	    
+	        statement = connnection.createStatement();
+	        final ResultSet rs = statement.executeQuery(sql);
+	        final T result = resultSetHandler.handle(rs);
+	        return result;
+	    }catch (SQLException e) {
+	    	System.out.println("erro"+e.getCause());
+	    }finally {
+	        if(statement != null) {
+	            try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        }
+	    }
+		return null;
+	}
 
 	public String getIp() {
 		return ip;
