@@ -5,13 +5,19 @@ import javax.swing.JFrame;
 public class Main {
 	public static void main(String[] args) {
 
+		//defaut
 		ConnectDb db = new ConnectDb();
+		
+		//Logins e senhas do banco
+		//ConnectDb db = new ConnectDb(ip, porta, bD, usuario, senha);
+		
+		//objeto que executa as querys
 		GetResults rs = new GetResults(db);
 
 		//exemplos de como pegar as listas
-		List<EstatistcVendas> list1 = rs.query1(1, 1);
-		List<RankVenda> list2 = rs.query2(1, 1);
-		List<AcumuladoDia> list3 = rs.query3(1, 1);
+		List<EstatistcVendas> query1 = rs.query1(1, 2);
+		List<RankVenda> query2 = rs.query2(1, 2);
+		List<AcumuladoDia> query3 = rs.query3(1, 2);
 
 		
 		//executando aplicação

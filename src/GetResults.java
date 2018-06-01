@@ -46,6 +46,7 @@ public class GetResults {
 				"		from NOTA_FISCAL\n" + 
 				"		join 	TRANSACAO ON TRANSACAO.ID_NOTA_FISCAL = NOTA_FISCAL.ID\n" + 
 				"		where 	REL_ID = " + idLoja + "\n" + 
+				"			AND EXTRACT(MONTH FROM NOTA_FISCAL.DATA) = "+mes+"\n"+
 				"		GROUP BY 	NOTA_FISCAL.DATA,\n" + 
 				"					Quantidade;";
 		List<EstatistcVendas> ids = null;
@@ -92,6 +93,7 @@ public class GetResults {
 				"		from NOTA_FISCAL\n" + 
 				"		join 	TRANSACAO ON TRANSACAO.ID_NOTA_FISCAL = NOTA_FISCAL.ID\n" + 
 				"		where 	REL_ID = " + idLoja + "\n" +
+				"			AND EXTRACT(MONTH FROM NOTA_FISCAL.DATA) = "+mes+"\n"+
 				"		GROUP BY 	NOTA_FISCAL.DATA,\n" + 
 				"					Quantidade;\n";
 		List<RankVenda> ids = null;
@@ -128,7 +130,8 @@ public class GetResults {
 				"			trunc(Quantidade/SUM(Quantidade),2) as part\n" + 
 				"		from NOTA_FISCAL\n" + 
 				"		join 	TRANSACAO ON TRANSACAO.ID_NOTA_FISCAL = NOTA_FISCAL.ID\n" + 
-				"		where 	REL_ID = " + idLoja + "\n"+  
+				"		where 	REL_ID = " + idLoja + "\n"+ 
+				"			AND EXTRACT(MONTH FROM NOTA_FISCAL.DATA) = "+mes+"\n"+
 				"		GROUP BY 	NOTA_FISCAL.DATA,\n" + 
 				"					Quantidade;";
 		List<AcumuladoDia> ids = null;
