@@ -15,17 +15,26 @@ public class ConnectDb {
 		System.out.println("Inciciação com atributos");
 	}
 
-	private String ip;
-	private int porta;
-	private String BD;
-	private String Usuario;
-	private String Senha;
-	private Connection connnection;
+	private String ip = "localhost";
+	private int porta = 5432;
+	private String BD = "postgres";
+	private String usuario = "matheus";
+	private String senha  = "senha";
+	private Connection connection;
 
+	public void closeConnection() {
+		try {
+			if(!connection.isClosed()) connection.close();
+		}catch (Exception e) {
+			System.out.println("erro: " + e.getClass());
+		}
+	}
+		
+	
 	private void conectar() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			connnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "matheus", "senha");
+			connection = DriverManager.getConnection("jdbc:postgresql://"+ip+":"+porta+"/"+BD, usuario,senha);
 		} catch (SQLException e) {
 			System.out.println(e.getCause());
 			System.out.print("Erro na conexao!!!!KKKKKKK");
@@ -40,11 +49,11 @@ public class ConnectDb {
 	    try
 	    {
 
-	        if(connnection == null || connnection.isClosed())
+	        if(connection == null || connection.isClosed())
 	        {
 	            conectar();
 	        }
-	        s = connnection.prepareStatement(sql);
+	        s = connection.prepareStatement(sql);
 	        boolean a = s.execute();
 	        s.close ();
 	        System.out.println (a + " foi o retorno na função");
@@ -52,11 +61,11 @@ public class ConnectDb {
 	    catch (SQLException e) 
 	    {
 	        e.printStackTrace();
-	        if (connnection != null)
+	        if (connection != null)
 	        {
 	            try
 	            {
-	                connnection.close ();
+	                connection.close ();
 	                System.out.println ("Database connection terminated");
 	            }
 	            catch (Exception se) {System.out.println("n sei o q aconteceu");}
@@ -70,12 +79,12 @@ public class ConnectDb {
 	    Statement statement = null;
 	    try
 	    {
-	        if(this.connnection == null || this.connnection.isClosed())
+	        if(this.connection == null || this.connection.isClosed())
 	        {
 	            conectar();
 	        }
 	    
-	        statement = connnection.createStatement();
+	        statement = connection.createStatement();
 	        final ResultSet rs = statement.executeQuery(sql);
 	        final T result = resultSetHandler.handle(rs);
 	        return result;
@@ -119,23 +128,23 @@ public class ConnectDb {
 	}
 
 	public String getUsuario() {
-		return Usuario;
+		return usuario;
 	}
 
 	public void setUsuario(String usuario) {
-		Usuario = usuario;
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {
-		return Senha;
+		return senha;
 	}
 
 	public void setSenha(String senha) {
-		Senha = senha;
+		this.senha = senha;
 	}
 
 	public Connection getConnnection() {
-		return connnection;
+		return connection;
 	}
 
 }

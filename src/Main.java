@@ -21,9 +21,9 @@ public class Main {
 
 		
 		//executando aplicação
-		telaConsulta tela = new telaConsulta();
+		telaConsulta tela = new telaConsulta(db);
 		tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		tela.setSize(600, 200);
+		tela.setSize(1000, 600);
 		tela.setVisible(true);
 
 	}
