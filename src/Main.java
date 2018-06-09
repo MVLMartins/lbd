@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class Main {
 	public static void main(String[] args) {
-
+		
 		//defaut
 		ConnectDb db = new ConnectDb();
 		
@@ -21,10 +21,12 @@ public class Main {
 
 		
 		//executando aplicação
-		telaConsulta tela = new telaConsulta(db);
+		telaConsulta tela = new telaConsulta(db,query1,query2,query3);
 		tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tela.setSize(1000, 600);
 		tela.setVisible(true);
-
+		
+		//InsercaoAleatoria a = new InsercaoAleatoria(db);
+		//a.criaFuncao();
 	}
 }

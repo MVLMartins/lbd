@@ -23,6 +23,7 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 	private JTextField textUsuario;
 	private JTextField textSenha;
 	private JLabel labelIp;
+	private JLabel labelResultados;
 	private JLabel labelPorta;
 	private JLabel labelNomeBanco;
 	private JLabel labelUsuario;
@@ -34,7 +35,9 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 	private JButton rankVenda;
 	private JButton acumuladoDia;
 	private ConnectDb bd;
-	
+	private List<EstatistcVendas> query1;
+	private List<RankVenda> query2;
+	private List<AcumuladoDia> query3;
 	// utilizar no main:
 	/*
 	public static void main(String[] args) {
@@ -48,11 +51,13 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 	}
 	 */
 	
-	public telaConsulta(ConnectDb bd) {
+	public telaConsulta(ConnectDb bd,List<EstatistcVendas> query1, List<RankVenda> query2, List<AcumuladoDia> query3) {
 		super("Consultas");
 		
 		setLayout(new FlowLayout());
-		
+		this.query1 =query1;
+		this.query2 =query2;
+		this.query3 = query3;
 		
 		this.bd=bd;
 		labelIdVendedor = new JLabel("ID Loja:");
@@ -70,7 +75,7 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 		labelSenha = new JLabel("Senha do banco:");
 		textSenha = new JTextField(20);
 		labelBanco = new JLabel("");
-		
+		labelResultados = new JLabel("");
 		dadosBanco = new JButton("Set Configuracoes do banco");
 		vendaAcumulada = new JButton("Venda Acumulada");
 		rankVenda = new JButton("Rank de Vendas");
@@ -135,6 +140,9 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 		p.add(rankVenda,grid);
 		grid.gridx = 2;
 		p.add(acumuladoDia,grid);
+		grid.gridx = 0;
+		grid.gridy = 10;
+		p.add(labelResultados,grid);
 		// add grid
 		add(p);
 		
@@ -153,20 +161,27 @@ public class telaConsulta extends JFrame implements WindowListener, ActionListen
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String texto;
+		String texto = "";
 		//inserir graficos
 		if(arg0.getSource()== vendaAcumulada) {
-			//insere gr�fico vendaAcumulada
-			texto = ("id loja: " + textIdVendedor.getText() + " M�s: " + textMes.getText());
-			JOptionPane.showMessageDialog(null, texto);
+			String resultados = "\n\n\n";
+			for(EstatistcVendas a : query1) {
+				resultados = resultados + a+"\n";
+			}
+			labelResultados.setText(resultados);
+			
 		}else if (arg0.getSource()== rankVenda){
-			//insere gr�fico vendaAcumulada
-			texto = ("id loja: " + textIdVendedor.getText() + " M�s: " + textMes.getText());
-			JOptionPane.showMessageDialog(null, texto);
+			String resultados = "";
+			for(RankVenda a : query2) {
+				resultados = resultados + a+"\n";
+			}
+			labelResultados.setText(resultados);
 		}else if (arg0.getSource()== acumuladoDia) {
-			//insere gr�fico vendaAcumulada
-			texto = ("id loja: " + textIdVendedor.getText() + " M�s: " + textMes.getText());
-			JOptionPane.showMessageDialog(null, texto);
+			String resultados = "";
+			for(AcumuladoDia a : query3) {
+				resultados = resultados + a+"\n";
+			}
+			labelResultados.setText(resultados);
 		}else if (arg0.getSource()== dadosBanco) {
 			bd.setIp(textIp.getText());
 			bd.setBD(textNomeBanco.getText());
